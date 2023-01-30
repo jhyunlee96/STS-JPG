@@ -15,7 +15,7 @@ public class BbsDAO {
 		try {
 			String dbURL = "jdbc:mysql://sts-jsp-bbs.cdgyxpkeva3i.ap-northeast-2.rds.amazonaws.com:3306/BBS";
 			String dbID = "root";
-			String dbPassword = "root";
+			String dbPassword = "roottoorr";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
