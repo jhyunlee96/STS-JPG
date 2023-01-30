@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/bootstrap.css">
-<title>JSP 게시판 웹 사이트</title>
+<title>JSP 게시판 웹 사이트123</title>
 <style type="text/css">
 	a, a:hover{
 		color: #000000;
