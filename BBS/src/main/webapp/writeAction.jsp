@@ -4,8 +4,8 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="file.FileDAO" %>
 <%@ page import="java.io.File" %>
-<%@ psge import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
-<%@ psge import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="bbs" class="bbs.Bbs" scope="page" />
 <jsp:setProperty name="bbs" property="bbsTitle" />
@@ -18,52 +18,50 @@
 </head>
 <body>
 	<%
-		String userID = null;
-		if (session.getAttribute("userID")!=null){
-			userID = (String) session.getAttribute("userID");
-		}
-		BbsDAO bbsDAO = new BbsDAO();
-		Bbs bbs = new Bbs();
-		bbs.setBbsID(bbsDAO.getNewNext());
-		int bbsID = bbs.getBbsID();
-		String directory = application.getRealPath("/upload/"+bbsID+"/");
-		
-		File targetDir = new File(directory);
-		if(!targetDir.exists()){
-			targetDir.mkdir();
-		}
-		
-		int maxSize = 1024 * 1024 * 500;
-		String encoding = "UTF-8";
-		
-		MultipartRequest multipartRequest
-		= new MultipartRequest(request, directory, maxsize, encoding, new DefaultFileRenamePolicy());
-		
-		String fileName = multipartRequest.getOriginalFileName("file");
-		String fileRealName = multipartRequest.getFilesystemName("file");
-		
-		String bbsTitle = multipartRequest.getParameter("bbsTitle");
-		String bbsContent = multipartRequest.getParameter("bbsContent");
-		bbs.setBbsTitle(bbsTitle);
-		bbs.setBbsContent(bbsContent);
-		
-		if (userID == null){
+	String userID = null;
+	if (session.getAttribute("userID")!=null){
+		userID = (String) session.getAttribute("userID");
+	}
+	if (userID ==null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인 후 이용해주세요')");
+		script.println("location.href = 'login.jsp'");
+		script.println("</script>");
+	} else {
+		if (bbs.getBbsTitle() == null || bbs.getBbsContent() == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인 후 이용해주세요')");
-			script.println("location.href = 'login.jsp'");
+			script.println("alert('임력이 안 된 사항이 있습니다')");
+			script.println("history.back()");
 			script.println("</script>");
-		} else {
-			
-			System.out.println("write action : check bbs parameter" + bbs.getBbsTitle());
-			
-			if (bbs.getBbsTitle() == null || bbs.getBbsContent() == null){
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('임력이 안 된 사항이 있습니다')");
-				script.println("history.back()");
-				script.println("</script>");
 			} else {
+				
+				BbsDAO bbsDAO = new BbsDAO();
+				//Bbs bbs = new Bbs();
+				//bbs.setBbsID(bbsDAO.getNewNext());
+				int bbsID = bbs.getBbsID();
+				String directory = application.getRealPath("C:/JSP/upload/"+bbsID+"/");
+				
+				File targetDir = new File(directory);
+				if(!targetDir.exists()){
+					targetDir.mkdirs();
+				}
+				
+				int maxSize = 1024 * 1024 * 500;
+				String encoding = "UTF-8";
+				
+				MultipartRequest multipartRequest 
+				= new MultipartRequest(request, directory, maxSize, encoding, 
+						new DefaultFileRenamePolicy());
+				
+				String fileName = multipartRequest.getOriginalFileName("file");
+				String fileRealName = multipartRequest.getFilesystemName("file");
+				
+				String bbsTitle = multipartRequest.getParameter("bbsTitle");
+				String bbsContent = multipartRequest.getParameter("bbsContent");
+				bbs.setBbsTitle(bbsTitle);
+				bbs.setBbsContent(bbsContent);
 				
 				System.out.println("getNewNext before bbsDAO.write : " + bbs.getBbsID());
 				int result = bbsDAO.write(bbs.getBbsTitle(),userID,bbs.getBbsContent());
