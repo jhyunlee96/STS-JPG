@@ -13,9 +13,9 @@ public class BbsDAO {
 	
 	public BbsDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost/stsdev";
-			String dbID = "stsdev";
-			String dbPassword = "Dosemeps2@";
+			String dbURL = "jdbc:mysql://localhost:7777/stsdev";
+			String dbID = "root";
+			String dbPassword = "root";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
@@ -147,6 +147,22 @@ public class BbsDAO {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, bbsID);
 			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
+	public int getNewNext() {
+		String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1)+1;
+			}
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
