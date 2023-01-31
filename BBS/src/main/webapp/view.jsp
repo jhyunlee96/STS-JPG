@@ -39,7 +39,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>	
 			</button>
-			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
+			<a class="navbar-brand" href="main.jsp">게시판 테스트 사이트</a>
 		</div>
 		<div class="collaps navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
