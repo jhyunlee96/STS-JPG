@@ -20,9 +20,6 @@
 			</button>
 			<a class="navbar-brand" href="main.jsp">게시판 테스트 사이트</a>
 		</div>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="bbs.jsp">게시판</a></li>
-		</ul>
 	</nav>
 	<div class="container">
 		<div class="col-lg-3 col-sm-3"></div>

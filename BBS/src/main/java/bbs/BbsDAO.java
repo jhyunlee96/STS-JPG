@@ -13,10 +13,10 @@ public class BbsDAO {
 	
 	public BbsDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:7777/stsdev";
-			String dbID = "root";
-			String dbPassword = "root";
-			Class.forName("com.mysql.jdbc.Driver");
+			String dbURL = "jdbc:mariadb://localhost/stsdev";
+            String dbID = "stsdev";
+            String dbPassword = "Dosemeps2@";
+            Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,8 +50,8 @@ public class BbsDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
-	public int write(String bbsTitle, String userID, String bbsContent) {
-		String SQL = "INSERT INTO BBS VALUE (?,?,?,?,?,?)";
+	public int write(String bbsTitle, String userID, String bbsContent, String fileName, String fileRealName) {
+		String SQL = "INSERT INTO BBS VALUE (?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
@@ -60,6 +60,9 @@ public class BbsDAO {
 			pstmt.setString(4, getDate());
 			pstmt.setString(5, bbsContent);;
 			pstmt.setInt(6, 1);
+			pstmt.setString(7, fileName);
+			pstmt.setString(8, fileRealName);
+			System.out.println("게시글 작성 성공");
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,22 +150,6 @@ public class BbsDAO {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, bbsID);
 			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1; // 데이터베이스 오류
-	}
-	
-	public int getNewNext() {
-		String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				return rs.getInt(1)+1;
-			}
-			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

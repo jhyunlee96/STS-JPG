@@ -8,6 +8,8 @@ public class Bbs {
 	private String bbsDate;
 	private String bbsContent;
 	private int bbsAvailable;
+	private String fileName;
+	private String fileRealName;
 	
 	public int getBbsID() {
 		return bbsID;
@@ -44,6 +46,18 @@ public class Bbs {
 	}
 	public void setBbsAvailable(int bbsAvailable) {
 		this.bbsAvailable = bbsAvailable;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getFileRealName() {
+		return fileRealName;
+	}
+	public void setFileRealName(String fileRealName) {
+		this.fileRealName = fileRealName;
 	}
 	
 }
