@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="bbs.BbsDAO" %>
+<%@ page import="bbs.Bbs" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.io.File" %>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
@@ -23,16 +24,22 @@
 		}
 		
 		//파일업로드 설정
-		String directory = "C:/Users/acelo/git/STS-JPG/BBS/upload";
+		BbsDAO bbsDAO = new BbsDAO();
+
+		bbs.setBbsID(bbsDAO.getNext());
+		int bbsID = bbs.getBbsID();
+		String directory = application.getRealPath("/upload/"+bbsID+"/");
 		
-		//File targetDir = new File(directory);
-		//if(!targetDir.exists()){
-		//	targetDir.mkdirs();
-		//}
+		File targetDir = new File(directory);
+		if(!targetDir.exists()){
+			targetDir.mkdirs();
+		}
 		int maxSize = 1024*1024*100;
 		String encoding = "UTF-8";
 		
-		MultipartRequest multipartRequest = new MultipartRequest(request,directory,maxSize,encoding,new DefaultFileRenamePolicy());
+		DefaultFileRenamePolicy policy = new DefaultFileRenamePolicy();
+		
+		MultipartRequest multipartRequest = new MultipartRequest(request,directory,maxSize,encoding,policy);
 		
 		String bbsTitle = multipartRequest.getParameter("bbsTitle");
 		String bbsContent = multipartRequest.getParameter("bbsContent");
@@ -56,7 +63,7 @@
 				script.println("history.back()");
 				script.println("</script>");
 			} else {
-				BbsDAO bbsDAO = new BbsDAO();
+				
 				int result = bbsDAO.write(bbs.getBbsTitle(), userID, bbs.getBbsContent(),fileName,fileRealName);
 				if (result == -1){
 					PrintWriter script = response.getWriter();

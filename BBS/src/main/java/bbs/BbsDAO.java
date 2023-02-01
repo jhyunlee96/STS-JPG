@@ -13,10 +13,10 @@ public class BbsDAO {
 	
 	public BbsDAO() {
 		try {
-			String dbURL = "jdbc:mariadb://localhost/stsdev";
-            String dbID = "stsdev";
-            String dbPassword = "Dosemeps2@";
-            Class.forName("org.mariadb.jdbc.Driver");
+			String dbURL = "jdbc:mysql://localhost:7777/stsdev";
+			String dbID = "root";
+			String dbPassword = "root";
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
