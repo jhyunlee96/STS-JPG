@@ -25,8 +25,6 @@ public class downloadAction extends HttpServlet {
 			bbsID = Integer.parseInt(request.getParameter("bbsID"));
 		}
 		
-		
-
 		String directory = this.getServletContext().getRealPath("/upload/");
 		File file = new File(directory +"/" + bbsID + "/" + fileName);
 		

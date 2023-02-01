@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="user.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +12,13 @@
 <title>JSP 게시판 웹 사이트</title>
 </head>
 <body>
+	<%
+		String userID=null;
+		if(session.getAttribute("userID")!=null){
+			userID=(String)session.getAttribute("userID");
+		}
+		User user=new UserDAO().getUser(userID);
+	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
@@ -27,32 +37,50 @@
 		<div class="col-lg-3 col-sm-3"></div>
 		<div class="col-lg-6 col-sm-6">
 			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="joinAction.jsp">
-					<h3 style="text-align: center;">회원가입</h3>
+				<form method="post" action="userUpdateAction.jsp">
+					<h3 style="text-align: center;">회원정보</h3>
 					<div class="form-group">
-						아이디: <input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+						아이디: <input type="text" class="form-control" value=<%=user.getUserID()%> name="userID" maxlength="20" readonly>
 					</div>
 					<div class="form-group">
-						패스워드: <input type="password" class="form-control" placeholder="패스워드" name="userPassword" maxlength="20">
+						패스워드 : <input type="password" class="form-control" placeholder="패스워드" name="userPassword" maxlength="20">
 					</div>
 					<div class="form-group">
-						이름: <input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
+						이름 : <input type="text" class="form-control" placeholder="이름" value=<%=user.getUserName()%> name="userName" maxlength="20">
 					</div>
 					<div class="form-group"	style="text-align:center;">
 						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary">
+							<%
+								if(user.getUserGender().equals("M")){
+							%>
+							<label class="btn btn-primary active">
 								<input type="radio" name="userGender" autocomplete='off' value="M" checked>남자
 							</label>
 							<label class="btn btn-primary">
 								<input type="radio" name="userGender" autocomplete='off' value="F" checked>여자
 							</label>
+							<%
+								} else {
+							%>
+							<label class="btn btn-primary">
+								<input type="radio" name="userGender" autocomplete='off' value="M" checked>남자
+							</label>
+							<label class="btn btn-primary active">
+								<input type="radio" name="userGender" autocomplete='off' value="F" checked>여자
+							</label>
+							<%
+								}
+							%>
 						</div>
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="이메일" name="userEmail" maxlength="50">
+						<input type="email" class="form-control" placeholder="이메일" value=<%=user.getUserEmail()%> name="userEmail" maxlength="50">
 					</div>
-					<input type="submit" class="btn btn-primary form-control" value="회원가입">
+					<input type="submit" class="btn btn-primary pull-right" value="수정하기">
 				</form>
+				<form method="post" action="userDeleteAction.jsp">
+	            	<input type="submit" class="btn btn-danger" value="탈퇴하기">
+	            </form>
 			</div>
 		</div>
 		<div class="col-lg-3 col-sm-3"></div>

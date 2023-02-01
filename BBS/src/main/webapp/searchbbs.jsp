@@ -102,21 +102,29 @@
 				</tr>
 			</thead>
 			<tbody>
-
-			<%
-				BbsDAO bbsDAO = new BbsDAO();
-				ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
-				for(int i = 0; i < list.size(); i++){
-			%>
-			<tr>
-				<td><%= list.get(i).getBbsID() %></td>
-				<td><a href="view.jsp?bbsID=<%= list.get(i).getBbsID() %>"><%= list.get(i).getBbsTitle() %></a></td>
-				<td><%= list.get(i).getUserID() %></td>
-				<td><%= list.get(i).getBbsDate().substring(0,11)+ list.get(i).getBbsDate().substring(11,13)+ "시" + list.get(i).getBbsDate().substring(14,16)+"분" %></td>
-			</tr>
-			<%
-				}
-			%>
+				<%
+					BbsDAO bbsDAO = new BbsDAO();
+					ArrayList<Bbs> list = bbsDAO.getSearch(request.getParameter("searchField"),	request.getParameter("searchText"));
+					if (list.size() == 0) {
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('검색결과가 없습니다.')");
+						script.println("history.back()");
+						script.println("</script>");
+					}
+					for (int i = 0; i < list.size(); i++) {
+				%>
+				<tr>
+					<td><%=list.get(i).getBbsID()%></td>
+					<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+					<td><%=list.get(i).getUserID()%></td>
+					<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시"
+					+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
+				</tr>
+				<%
+					}
+				%>
 			</tbody>
 		</table>
 		<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
@@ -129,7 +137,7 @@
 				} 
 			%>
 			<%
-				int n = (int) (bbsDAO.getCount()/10 + 1);
+				int n = (int) (bbsDAO.getCount() / 10 + 1);
 				for (int i = 1; i <= n; i++) {
 			%>
 				<a href="bbs.jsp?pageNumber=<%=i%>">|<%=i%>|
@@ -145,8 +153,6 @@
 				}
 			%>
 		</div>
-		
-
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>

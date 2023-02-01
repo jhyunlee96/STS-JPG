@@ -44,7 +44,7 @@
 					 data-toggle="dropdown" role="button" aria-haspopup="true"
 					 aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="logoutAction.jsp">회원정보</a></li>
+						<li><a href="userUpdate.jsp">회원정보</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>
@@ -68,15 +68,26 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td style="width: 20%;">글 제목</td>
 							<td><input type="text" class="form-control" placeholder="글제목" name="bbsTitle" maxlength="50"></td>
 						</tr>
 						<tr>
+							<td style="width: 20%;">글 내용</td>
 							<td><textarea class="form-control" placeholder="글내용" name="bbsContent" maxlength="10240" style="height:350px;"></textarea></td>
+						</tr>
+						<tr>
+							<td style="width: 20%;">첨부파일</td>
+							<td>
+								<input type="file" name="file">
+								<input type="file" name="file">
+								<input type="file" name="file">
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				파일: <input type="file" name="file"><br>
 				<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+
+				
 			</form>
 		</div>
 	</div>
