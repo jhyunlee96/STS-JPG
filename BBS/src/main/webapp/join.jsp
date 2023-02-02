@@ -30,7 +30,8 @@
 				<form method="post" action="joinAction.jsp">
 					<h3 style="text-align: center;">회원가입</h3>
 					<div class="form-group">
-						아이디: <input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+						아이디: <input type="text" class="form-control" placeholder="아이디" name="userID" 
+							maxlength="20">
 					</div>
 					<div class="form-group">
 						패스워드: <input type="password" class="form-control" placeholder="패스워드" name="userPassword" maxlength="20">

@@ -78,9 +78,8 @@
 					</div>
 					<input type="submit" class="btn btn-primary pull-right" value="수정하기">
 				</form>
-				<form method="post" action="userDeleteAction.jsp">
-	            	<input type="submit" class="btn btn-danger" value="탈퇴하기">
-	            </form>
+	            <a onclick="return confirm('정말로 탈퇴 하시겠습니까?')" 
+	            	href="userDeleteAction.jsp?userID=<%= userID %>" class="btn btn-danger">탈퇴하기</a>
 			</div>
 		</div>
 		<div class="col-lg-3 col-sm-3"></div>

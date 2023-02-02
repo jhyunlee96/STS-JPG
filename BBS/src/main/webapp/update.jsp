@@ -87,8 +87,9 @@
 							value="<%=bbs.getBbsTitle()%>"></td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글내용" name="bbsContent" maxlength="10240" style="height:350px;">
-							<%=bbs.getBbsContent()%></textarea></td>
+							<td><textarea class="form-control" placeholder="글내용" name="bbsContent" maxlength="10240" 
+							style="height:350px;">
+							 <%=bbs.getBbsContent()%></textarea></td>
 						</tr>
 					</tbody>
 				</table>
